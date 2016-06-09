@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <script src="./ctrlrs.js"></script>
+</head>
+<style>
+    * {
+        background-color: aliceblue;
+    }
+    body {
+        margin-left: 20%;
+        font-size: x-large;
+    }
+     .uaBtn{
+         padding: 1em;
+         margin: 1em 3em ;
+         font-size: x-large;
+         background-color: lightskyblue;
+         border-radius: 0.5em;
+     }
+     .uaBtn:hover {
+         cursor: pointer;
+     }
+    input {
+        font-size: x-large;
+        background-color: white;
+    }
+</style>
+<body ng-controller="UplCtrlr">
+
+<h1>Upload service</h1>
+<br>
+<ng-view></ng-view>
+<br>
+<!--Today {{ today | date:'dd/MM/yyyy' }} <br>-->
+<!--<br>-->
+
+<!--<table>-->
+    <!--<tr ng-repeat="phone in phones">-->
+        <!--<td>{{phone.name}}</td>-->
+        <!--<td>{{phone.descr}}</td>-->
+    <!--</tr>-->
+<!--</table>-->
+
+<!--<ul>-->
+    <!--<li><a href="#/">Home</a> </li>-->
+    <!--<li><a href="#/about">About</a> </li>-->
+    <!--<li><a href="#/contacts">Contacts</a> </li>-->
+<!--</ul>-->
+
+<!--<button ng-click="changeRoute()">-->
+    <!--Change route-->
+<!--</button>-->
+
+</body>
+</html>
