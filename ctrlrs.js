@@ -1,4 +1,24 @@
 var ngAppMod = angular.module("myApp",['ngRoute']);
+var serverPath = "http://54.213.253.8:1337";
+
+ngAppMod.service('commonData', function($http) {
+    console.log("in service");
+    this.arrUserLinks = [];
+    var _this=this;
+    this.updateLinks = function(cb) {
+        console.log("update list in service");
+        $http.get(serverPath+"/files/find").then(function(response) {
+            console.log("response", response);
+            _this.arrUserLinks = response.data.slice(0);
+            console.log("arUserLinks", _this.arrUserLinks);
+            if (cb) {
+                cb(_this.arrUserLinks)
+            }
+        }, function(err) {
+            console.log("error on file list request", err);
+        });
+    }
+});
 
 ngAppMod.config(['$locationProvider','$routeProvider', function($locationProvider, $routeProvider) {
     console.log("in conf");
@@ -24,18 +44,16 @@ ngAppMod.config(['$locationProvider','$routeProvider', function($locationProvide
         });
 }]);
 
-ngAppMod.controller("UplCtrlr", ['$scope', '$location', '$http', function($scope, $location, $http){
+ngAppMod.controller("UplCtrlr", ['$scope', '$location', '$http', "commonData", function($scope, $location, $http, commonData){
 
     $scope.serverPath = "http://54.213.253.8:1337";
     $scope.username = localStorage.getItem("username");
-    //$scope.password = "";
-    $scope.a=1;
 
-    if (!$scope.userfiles) {
-        console.log("reset uf");
-        $scope.userfiles = [];
-    }
-    //$scope.$watch("userfiles");
+    $scope.userfiles = function() {
+        return commonData.arrUserLinks;
+    };
+
+    console.log("controller. uf", $scope.userfiles());
 
     $scope.signIn = function() {
         $location.path("/signin");
@@ -49,22 +67,12 @@ ngAppMod.controller("UplCtrlr", ['$scope', '$location', '$http', function($scope
     };
 
     $scope.updateFileList = function () {
-        console.log("update file list");
-        console.log("$scope.a in updt", $scope.a);
-        $http.get($scope.serverPath+"/files/find").then(function(response) {
-            console.log("response", response);
-            $scope.userfiles = response.data.slice(0);
-            //$scope.$apply($scope.userfiles);
-            console.log("files", $scope.userfiles);
-            $scope.a=2;
-        }, function(err) {
-            console.log("error", err);
-        })
+        console.log("updating file list");
+        commonData.updateLinks();
     };
 
     $scope.testUF = function() {
-        console.log("a", $scope.a);
-        console.log("uf", $scope.userfiles);
+        console.log("uf", $scope.userfiles());
         $scope.updateFileList();
     };
 
@@ -90,6 +98,7 @@ ngAppMod.controller("UplCtrlr", ['$scope', '$location', '$http', function($scope
     };
 
     $scope.moveToUploadPage = function() {
+        $scope.a=5;
         $location.path("/uploadPage");
         $scope.updateFileList();
     };

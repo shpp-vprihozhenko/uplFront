@@ -4,19 +4,15 @@
 <h2>
     Upload & History page for user {{ username }}
 </h2>
-<!--action="http://54.213.253.8:1337/file/upload"-->
-<!--<form enctype="multipart/form-data" method="post">-->
     <input type="text" name="username" ng-model="username" ng-show="false"><br>
     <input type="file" id="userfile" ng-model="userfile"><br>
     <br>
-    <!--<input type="submit" value="Upload!" class="uaBtn" ng-click="uploadFile()">-->
     <button class="uaBtn" ng-click="uploadFile()">Upload!</button>
-<!--</form>-->
 
 <button class="uaBtn" ng-click="testUF()">load history!</button>
 
 <ul>
-    <li ng-repeat="file in userfiles">
+    <li ng-repeat="file in userfiles()">
         File {{ file.filename }}
     </li>
 </ul>
