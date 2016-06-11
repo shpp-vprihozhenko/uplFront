@@ -5,9 +5,9 @@ ngAppMod.service('commonData', function($http) {
     console.log("in service");
     this.arrUserLinks = [];
     var _this=this;
-    this.updateLinks = function(cb) {
+    this.updateLinks = function(username, cb) {
         console.log("update list in service");
-        $http.get(serverPath+"/files/find").then(function(response) {
+        $http.get(serverPath+"/files/findUserFiles?username="+username).then(function(response) {
             console.log("response", response);
             _this.arrUserLinks = response.data.slice(0);
             console.log("arUserLinks", _this.arrUserLinks);
@@ -68,7 +68,7 @@ ngAppMod.controller("UplCtrlr", ['$scope', '$location', '$http', "commonData", f
 
     $scope.updateFileList = function () {
         console.log("updating file list");
-        commonData.updateLinks();
+        commonData.updateLinks($scope.username);
     };
 
     $scope.testUF = function() {
